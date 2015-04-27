@@ -1,22 +1,15 @@
-<html>
+<html ng-app="angularFriends">
 <head>
-<script src='http://code.jquery.com/jquery-1.10.2.js' type='text/javascript'></script>
-<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
-<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css">
-<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script src='http://code.jquery.com/jquery-1.10.2.js' type='text/javascript'></script>
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css">
 
-
-<script src='http://code.angularjs.org/1.1.5/angular.js' type='text/javascript'></script>
-<script src='app.js' type='text/javascript'></script>
-<script src='FriendController.js' type='text/javascript'></script>
-
-
-
-<link rel="stylesheet" type="text/css" href="style.css">
-<title>Facebook Lesson 18</title>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Facebook Lesson 18</title>
 </head>
 
-<body>
+<body ng-controller="ctrl">
 
 <h1>The <strong>facebook</strong> Friend Machine</h1>
 
@@ -26,11 +19,11 @@
 <form class="form-inline searchForm" role="form">
   <div class="form-group">
 
-  <input class="form-control" placeholder="Search Anything About Your Friends" >
+  <input class="form-control" placeholder="Search Anything About Your Friends" ng-model="searchTerm" autofocus>
   <!-- The stuff below is For step 5....get rid of the one above if you wish-->
-<!--    
+<!--
     <input class="form-control" placeholder="Search Your Friends' Name" >
-    <input class="form-control" placeholder="Search Your Freinds' Location" > 
+    <input class="form-control" placeholder="Search Your Freinds' Location" >
  -->
     <select class="input-medium">
         <option>Name</option>
@@ -46,27 +39,24 @@
   </div>
 </form>
 
-  <ul>
+  <ul ng-repeat="friend in friends | filter:{name:searchTerm} | orderBy:'+name'">
     <li class='friend'>
-       <img class="profile-pic" src='https://scontent-a.xx.fbcdn.net/hprofile-ash3/833_10200838803828124_1233160321_a.jpg'>
-      <h3>Cali Fornia</h3>
+       <img class="profile-pic" src='{{friend.pic_square}}'>
+      <h3>{{friend.name}}</h3>
       <div class="location">
-        Location: New Port Beach, California, United States
-      </div>      
+        Location: {{friend.current_location.name}}, {{friend.current_location.state}}
+      </div>
       <div class="status">
-        Status: I hate the snow. I wish I was on the beach right now!!! <span class="hashtag">#ihateprovo</span>
-      </div>      
+        Status: {{friend.status.message}}
+      </div>
       <div class="num-friends">
-        Friends: 1,367
+        Friends: {{friend.friend_count}}
       </div>
     </li>
   </ul>
 </div>
-
-
-
-
-
-
+<script src='http://code.angularjs.org/1.1.5/angular.js' type='text/javascript'></script>
+<script src='app.js' type='text/javascript'></script>
+<script src='FriendController.js' type='text/javascript'></script>
 </body>
 </html>
